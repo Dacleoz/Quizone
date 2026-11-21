@@ -1,0 +1,11 @@
+<ol class="review">
+  {{#items}}
+  <li>
+    <span class="n">{{n}}</span><span class="qt">{{text}}</span>
+    <span class="ans {{^answer}}empty{{/answer}}">{{answer}}{{^answer}}Nessuna risposta{{/answer}}</span>
+    {{#editable}}<button type="button" class="mini" data-act="goto" data-i="{{i}}">Modifica</button>{{/editable}}
+    {{#solution}}<span class="sol">Risposta giusta: <b>{{solution}}</b></span>{{/solution}}
+    {{#verdict}}<span class="right"><span class="verdict {{cls}}">{{label}} pt</span></span>{{/verdict}}
+  </li>
+  {{/items}}
+</ol>

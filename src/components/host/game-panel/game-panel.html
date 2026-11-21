@@ -1,0 +1,20 @@
+<section class="card">
+  <div class="row"><h2>Partita {{code}}</h2><span class="eyebrow">{{phase}}</span></div>
+  <div class="gamepanel">
+    <div>
+      <div class="eyebrow">{{connected}} · {{sent}}</div>
+      <div class="t" data-timer>--:--</div>
+      {{#running}}<div class="lead small">Fine alle {{endsAt}}</div>{{/running}}
+    </div>
+    <div class="btns">
+      {{#running}}
+        <button class="btn ghost" data-act="addFive" {{#busy}}disabled{{/busy}}>+5 minuti</button>
+        <button class="btn danger" data-act="endNow" {{#busy}}disabled{{/busy}}>Termina ora</button>
+      {{/running}}
+      {{#ended}}<span class="lead small">Partita chiusa. Per rigiocare crea una nuova partita.</span>{{/ended}}
+      {{#waiting}}<button class="btn primary" data-act="startGame" {{#cantStart}}disabled{{/cantStart}}>Avvia ({{minutes}} min)</button>{{/waiting}}
+    </div>
+  </div>
+  <div class="note">Tieni aperta questa pagina durante la partita: è lei che calcola i punteggi e aggiorna la classifica che vedono i giocatori.</div>
+  {{> error}}
+</section>

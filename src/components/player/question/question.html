@@ -1,0 +1,24 @@
+<section class="card">
+  {{{progress}}}
+  <div class="qhead">
+    <span class="qnum"><b>{{q.n}}</b>/ {{count}}</span>
+    <span class="pts">{{points}}</span>
+  </div>
+  <h2>{{q.text}}</h2>
+  {{#options.length}}
+  <div class="opts" role="group" aria-label="Opzioni">
+    {{#options}}<button type="button" class="opt" data-act="choose" data-i="{{i}}" aria-pressed="{{pressed}}"><span class="letter">{{letter}}</span><span>{{text}}</span></button>{{/options}}
+  </div>
+  {{/options.length}}
+  {{^options.length}}
+  <label class="field">La tua risposta
+    <input class="text" data-input="answer" autocomplete="off" enterkeyhint="next" maxlength="200" value="{{answer}}" data-autofocus>
+  </label>
+  {{#q.hint}}<p class="hint">{{q.hint}}</p>{{/q.hint}}
+  {{/options.length}}
+  <div class="saved" data-saved></div>
+  <div class="qactions">
+    <button type="button" class="btn ghost" data-act="prev" {{#first}}disabled{{/first}}>Indietro</button>
+    <button type="button" class="btn primary" data-act="next">{{#last}}Rivedi e invia{{/last}}{{^last}}Avanti{{/last}}</button>
+  </div>
+</section>

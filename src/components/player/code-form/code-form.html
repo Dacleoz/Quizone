@@ -1,0 +1,12 @@
+<section class="card">
+  <span class="eyebrow">Benvenuto</span>
+  <h2>Inserisci il codice della partita</h2>
+  <p class="lead">Il codice te lo dà il conduttore, oppure apri direttamente il link che ti ha mandato.</p>
+  {{> error}}
+  <form data-act="enterCode" class="stack" novalidate>
+    <label class="field">Codice partita
+      <input class="text code" name="code" maxlength="8" autocomplete="off" autocapitalize="characters" value="{{code}}" placeholder="ES. K7QXM" data-autofocus>
+    </label>
+    <div><button class="btn primary" type="submit">Entra</button></div>
+  </form>
+</section>

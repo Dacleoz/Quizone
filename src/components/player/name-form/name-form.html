@@ -1,0 +1,12 @@
+<section class="card">
+  <span class="eyebrow">{{phase}} · {{code}}</span>
+  <h2>Come ti chiami?</h2>
+  <p class="lead">Il nome compare in classifica. Hai {{minutes}} minuti per {{count}} domande: il tempo è uguale per tutti e parte quando il conduttore avvia la partita.</p>
+  <form data-act="join" class="stack" novalidate>
+    <label class="field">Nome o squadra
+      <input class="text" data-input="name" maxlength="40" autocomplete="nickname" value="{{name}}" placeholder="Es. Giulia o I Saputelli" data-autofocus>
+    </label>
+    {{> error}}
+    <div><button class="btn primary" type="submit" {{#busy}}disabled{{/busy}}>{{button}}</button></div>
+  </form>
+</section>

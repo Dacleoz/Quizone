@@ -1,0 +1,12 @@
+<section class="card">
+  {{{progress}}}
+  <span class="eyebrow">Riepilogo · {{me.name}}</span>
+  <h2>Ricontrolla prima di inviare</h2>
+  {{> answerList}}
+  {{#missing}}<div class="note">{{missing}} senza risposta: valgono zero punti. Se non invii, allo scadere del tempo le risposte date vengono inviate in automatico.</div>{{/missing}}
+  {{> error}}
+  <div class="qactions">
+    <button type="button" class="btn ghost" data-act="goto" data-i="{{lastIdx}}">Indietro</button>
+    <button type="button" class="btn primary" data-act="submit" {{#busy}}disabled{{/busy}}>{{#busy}}Invio in corso…{{/busy}}{{^busy}}Invia le risposte{{/busy}}</button>
+  </div>
+</section>

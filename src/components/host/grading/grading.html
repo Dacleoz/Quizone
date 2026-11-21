@@ -1,0 +1,24 @@
+<section class="card">
+  <h2>Concorrenti e correzione</h2>
+  <p class="lead small">Le risposte aperte sono corrette in automatico. Se una risposta è giusta ma scritta in modo diverso, segnala qui: la classifica si aggiorna per tutti.</p>
+  <div class="stack">
+    {{#players}}
+    <details class="player" data-key="{{uid}}" {{#open}}open{{/open}}>
+      <summary><span class="name">{{name}}</span><span class="score">{{score}}</span></summary>
+      <ol class="grade">
+        {{#answers}}
+        <li>
+          <span class="n">{{n}}</span>
+          <span class="ans">{{answer}}{{^answer}}<span class="muted">Nessuna risposta</span>{{/answer}}
+            <span class="muted">Automatico: {{auto}} · soluzione: {{solution}}</span></span>
+          <span class="seg" role="group" aria-label="Correzione domanda {{n}}">
+            {{#modes}}<button type="button" class="{{mode}}" data-act="grade" data-uid="{{uid}}" data-n="{{n}}" data-mode="{{mode}}" aria-pressed="{{pressed}}" {{#busy}}disabled{{/busy}}>{{label}}</button>{{/modes}}
+          </span>
+        </li>
+        {{/answers}}
+      </ol>
+    </details>
+    {{/players}}
+    {{^players.length}}{{#empty}}{{> emptyState}}{{/empty}}{{/players.length}}
+  </div>
+</section>

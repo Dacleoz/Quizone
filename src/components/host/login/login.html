@@ -1,0 +1,12 @@
+<section class="card">
+  <span class="eyebrow">Accesso riservato</span>
+  <h2>Entra come conduttore</h2>
+  <p class="lead">Usa l'email e la password dell'account conduttore creato in Firebase. I giocatori non devono passare da qui: usano il link della partita.</p>
+  {{#wrongAccount}}<div class="error">L'account {{wrongAccount}} non è il conduttore di questo quiz.</div>{{/wrongAccount}}
+  <form data-act="login" class="stack" novalidate>
+    <label class="field">Email<input class="text" name="email" type="email" autocomplete="username" required data-autofocus></label>
+    <label class="field">Password<input class="text" name="password" type="password" autocomplete="current-password" required></label>
+    {{> error}}
+    <div><button class="btn primary" type="submit" {{#busy}}disabled{{/busy}}>{{#busy}}Accesso…{{/busy}}{{^busy}}Entra{{/busy}}</button></div>
+  </form>
+</section>

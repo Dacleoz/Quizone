@@ -1,0 +1,23 @@
+# Firebase CLI
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+firestore-debug.log
+ui-debug.log
+database-debug.log
+pubsub-debug.log
+
+# Node (se in futuro aggiungete dipendenze)
+node_modules/
+dist/
+npm-debug.log*
+
+# Sistema operativo ed editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Impostazioni locali di Claude Code
+.claude/settings.local.json

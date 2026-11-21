@@ -1,0 +1,14 @@
+<section class="card">
+  <h2>Elimina partita</h2>
+  <p class="lead small">Cancella la partita {{code}} con concorrenti, risposte e classifica.</p>
+  {{#confirmDelete}}
+  <div class="row">
+    <span><b>Eliminare la partita {{code}}?</b> Non si può annullare.</span>
+    <span class="btns">
+      <button class="btn ghost" data-act="cancelDelete">Annulla</button>
+      <button class="btn danger" data-act="deleteGame" {{#busy}}disabled{{/busy}}>Sì, elimina</button>
+    </span>
+  </div>
+  {{/confirmDelete}}
+  {{^confirmDelete}}<div><button class="btn ghost" data-act="askDelete">Elimina partita</button></div>{{/confirmDelete}}
+</section>

@@ -1,0 +1,27 @@
+{
+  "questions": [
+    { "n": 1, "pts": 1, "type": "open", "text": "In quale Paese si sono svolti i Giochi olimpici invernali Milano Cortina 2026?",
+      "solution": "Italia", "groups": [["italia", "italy"]] },
+    { "n": 2, "pts": 2, "type": "open", "text": "Quale corpo celeste ha sorvolato l’equipaggio della missione Artemis II?",
+      "solution": "La Luna", "groups": [["luna", "moon"]] },
+    { "n": 3, "pts": 3, "type": "choice", "text": "Quale nazionale ha vinto i Mondiali di calcio 2026?",
+      "options": ["Argentina", "Spagna", "Francia"], "correct": 1 },
+    { "n": 4, "pts": 4, "type": "choice", "text": "Quale film ha vinto l’Oscar 2026 per il miglior film?",
+      "options": ["Sinners", "Hamnet", "One Battle after Another"], "correct": 2 },
+    { "n": 5, "pts": 5, "type": "choice", "text": "In quale Paese si è tenuta la conferenza sul clima COP31?",
+      "options": ["Brasile", "Turchia", "Australia"], "correct": 1 },
+    { "n": 6, "pts": 6, "type": "open", "text": "Di quale tecnologia si occupa l’AI Act dell’Unione europea?",
+      "solution": "Intelligenza artificiale", "groups": [["intelligenza artificiale", "ia", "ai", "artificial intelligence"]] },
+    { "n": 7, "pts": 7, "type": "open", "text": "Quali tre Paesi hanno ospitato insieme i Mondiali di calcio 2026?",
+      "hint": "Scrivi tutti e tre i Paesi: servono tutti per prendere i punti.",
+      "solution": "Stati Uniti, Canada e Messico",
+      "groups": [["stati uniti", "usa", "us", "america", "united states", "stati uniti d america"], ["canada"], ["messico", "mexico"]] },
+    { "n": 8, "pts": 8, "type": "choice", "text": "A quale attività l’ONU ha dedicato uno degli anni internazionali del 2026, collegandola allo sviluppo sostenibile?",
+      "options": ["Volontariato", "Turismo", "Sport"], "correct": 0 },
+    { "n": 9, "pts": 9, "type": "open", "text": "In quale città turca si è svolta la COP31?",
+      "solution": "Antalya", "groups": [["antalya", "antalia"]] },
+    { "n": 10, "pts": 10, "type": "open", "text": "Secondo la BCE, l’euro digitale è già stato emesso oppure è ancora un progetto in preparazione?",
+      "solution": "È ancora un progetto in preparazione",
+      "groups": [["progetto", "preparazione", "non ancora", "non e ancora", "in sviluppo", "in fase", "non emesso", "non e stato emesso"]] }
+  ]
+}

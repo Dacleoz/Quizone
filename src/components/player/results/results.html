@@ -1,0 +1,16 @@
+<section class="card">
+  <span class="eyebrow">{{heading}} · {{me.name}}</span>
+  {{#score}}
+  <div class="scorebox">
+    <div class="bignum">{{pts}}<small> / {{total}}</small></div>
+    <p class="lead">{{summary}}{{#still}}<br>{{still}} ancora rispondendo.{{/still}}</p>
+  </div>
+  {{/score}}
+  {{^score}}<p class="lead">Calcolo del punteggio in corso…</p>{{/score}}
+  <div><button class="btn primary" data-act="tab" data-tab="board">Guarda la classifica</button></div>
+</section>
+<section class="card">
+  {{#graded}}<h2>La correzione</h2>{{/graded}}
+  {{^graded}}<h2>Le tue risposte</h2><p class="lead small">La correzione domanda per domanda compare qui quando finisce il tempo.</p>{{/graded}}
+  {{> answerList}}
+</section>

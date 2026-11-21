@@ -1,0 +1,130 @@
+rules_version = '2';
+
+// Quiz 2026
+// - Conduttore: un solo account (email/password), riconosciuto dal suo UID.
+// - Giocatori: accesso anonimo; ognuno legge e scrive solo il proprio documento.
+// - Le soluzioni le legge solo il conduttore; la classifica pubblica la scrive solo il conduttore.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isHost() {
+      return request.auth != null && request.auth.uid == 'E2aag03sFtgYAugJwAD1LQHIoxA2';
+    }
+    function isSelf(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    function playerFields() {
+      return ['name', 'status', 'answers', 'answered', 'joinedAt', 'submittedAt'];
+    }
+    // Risposte: chiavi q1..q30; ognuna è un testo breve (domanda aperta) o l'indice dell'opzione scelta.
+    function okAnswer(a, k) {
+      return !(k in a)
+        || (a[k] is string && a[k].size() <= 300)
+        || (a[k] is int && a[k] >= 0 && a[k] < 10);
+    }
+    function okAnswers(a) {
+      return a is map
+        && a.keys().hasOnly(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30'])
+        && okAnswer(a, 'q1')
+        && okAnswer(a, 'q2')
+        && okAnswer(a, 'q3')
+        && okAnswer(a, 'q4')
+        && okAnswer(a, 'q5')
+        && okAnswer(a, 'q6')
+        && okAnswer(a, 'q7')
+        && okAnswer(a, 'q8')
+        && okAnswer(a, 'q9')
+        && okAnswer(a, 'q10')
+        && okAnswer(a, 'q11')
+        && okAnswer(a, 'q12')
+        && okAnswer(a, 'q13')
+        && okAnswer(a, 'q14')
+        && okAnswer(a, 'q15')
+        && okAnswer(a, 'q16')
+        && okAnswer(a, 'q17')
+        && okAnswer(a, 'q18')
+        && okAnswer(a, 'q19')
+        && okAnswer(a, 'q20')
+        && okAnswer(a, 'q21')
+        && okAnswer(a, 'q22')
+        && okAnswer(a, 'q23')
+        && okAnswer(a, 'q24')
+        && okAnswer(a, 'q25')
+        && okAnswer(a, 'q26')
+        && okAnswer(a, 'q27')
+        && okAnswer(a, 'q28')
+        && okAnswer(a, 'q29')
+        && okAnswer(a, 'q30');
+    }
+
+    // Testo delle domande (senza soluzioni): pubblico.
+    match /quiz/questions {
+      allow read: if true;
+      allow write: if isHost();
+    }
+    // Soluzioni: solo conduttore.
+    match /quiz/solutions {
+      allow read, write: if isHost();
+    }
+
+    match /games/{code} {
+      function game() {
+        return get(/databases/$(database)/documents/games/$(code)).data;
+      }
+
+      // Chi ha il codice può leggere lo stato della partita; solo il conduttore elenca e modifica.
+      allow get: if true;
+      allow list, write: if isHost();
+
+      // Classifica e soluzioni rivelate a fine partita.
+      match /public/{docId} {
+        allow read: if true;
+        allow write: if isHost();
+      }
+
+      // Correzioni manuali del conduttore.
+      match /grading/{uid} {
+        allow read, write: if isHost();
+      }
+
+      match /players/{uid} {
+        allow get: if isHost() || isSelf(uid);
+        allow list, delete: if isHost();
+
+        // Ingresso: solo prima dell'avvio o a partita in corso e non ancora scaduta,
+        // con risposte vuote e orario di ingresso messo dal server.
+        allow create: if isSelf(uid)
+          && (game().status == 'waiting'
+              || (game().status == 'running' && request.time < game().endsAt))
+          && request.resource.data.keys().hasOnly(['name', 'status', 'answers', 'answered', 'joinedAt'])
+          && request.resource.data.name is string
+          && request.resource.data.name.size() > 0
+          && request.resource.data.name.size() <= 40
+          && request.resource.data.status == 'playing'
+          && request.resource.data.answers is map
+          && request.resource.data.answers.size() == 0
+          && request.resource.data.answered == 0
+          && request.resource.data.joinedAt == request.time;
+
+        // Risposte modificabili solo a partita in corso (con 60 s di tolleranza dopo la fine)
+        // e solo finché il giocatore non ha inviato. L'orario di invio lo mette il server.
+        // Le soluzioni vengono pubblicate solo dopo la tolleranza (vedi REVEAL_DELAY_MS in src/lib/game.js).
+        allow update: if isSelf(uid)
+          && resource.data.status == 'playing'
+          && request.resource.data.keys().hasOnly(playerFields())
+          && request.resource.data.name == resource.data.name
+          && request.resource.data.get('joinedAt', null) == resource.data.get('joinedAt', null)
+          && okAnswers(request.resource.data.answers)
+          && request.resource.data.answered is int
+          && request.resource.data.answered >= 0
+          && request.resource.data.answered <= 30
+          && game().status in ['running', 'ended']
+          && request.time < game().endsAt + duration.value(60, 's')
+          && ((request.resource.data.status == 'playing'
+               && !('submittedAt' in request.resource.data))
+              || (request.resource.data.status == 'submitted'
+               && request.resource.data.submittedAt == request.time));
+      }
+    }
+  }
+}

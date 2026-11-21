@@ -1,0 +1,8 @@
+<section class="card">
+  <div class="row"><h2>Partite</h2><button class="btn primary" data-act="newGame" {{#disabled}}disabled{{/disabled}}>Nuova partita</button></div>
+  {{#games.length}}
+  <div class="games">{{#games}}<button type="button" data-act="selectGame" data-code="{{id}}" aria-current="{{current}}">{{id}}<small>{{label}}</small></button>{{/games}}</div>
+  {{/games.length}}
+  {{^games.length}}<p class="lead small">Nessuna partita ancora. Crea una partita per avere il link da mandare ai giocatori.</p>{{/games.length}}
+  {{^game}}{{> error}}{{/game}}
+</section>
