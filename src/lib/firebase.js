@@ -14,4 +14,4 @@ const app = initializeApp({
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const HOST_UID = "E2aag03sFtgYAugJwAD1LQHIoxA2";
+

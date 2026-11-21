@@ -1,5 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../lib/firebase.js";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../lib/firebase.js";
 import { delegate, trackOpen } from "../../lib/render.js";
 import { tickClock } from "../shared/clock/clock.js";
 import { H, isHost } from "./state.js";
@@ -15,8 +16,12 @@ document.addEventListener("change", ({ target: t }) => {
 
 setInterval(() => { tickClock(H.game); checkEnded(); }, 1000);
 
-onAuthStateChanged(auth, (user) => {
-  H.user = user; H.authReady = true;
+// Conduttore = account con un documento in hosts/{uid} (gestiti dalla console Firebase).
+onAuthStateChanged(auth, async (user) => {
+  const host = user && !user.isAnonymous
+    && (await getDoc(doc(db, "hosts", user.uid)).catch(() => null))?.exists();
+  if (user !== auth.currentUser) return; // l'account è cambiato durante la lettura
+  Object.assign(H, { user, isHost: !!host, authReady: true });
   isHost() ? startHost() : stopHost();
   render();
 });

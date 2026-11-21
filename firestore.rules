@@ -1,14 +1,15 @@
 rules_version = '2';
 
 // Quiz 2026
-// - Conduttore: un solo account (email/password), riconosciuto dal suo UID.
+// - Conduttori: account con un documento in hosts/{uid}; vedono e gestiscono tutte le partite.
 // - Giocatori: accesso anonimo; ognuno legge e scrive solo il proprio documento.
-// - Le soluzioni le legge solo il conduttore; la classifica pubblica la scrive solo il conduttore.
+// - Le soluzioni le leggono solo i conduttori; la classifica pubblica la scrivono solo i conduttori.
 service cloud.firestore {
   match /databases/{database}/documents {
 
     function isHost() {
-      return request.auth != null && request.auth.uid == 'E2aag03sFtgYAugJwAD1LQHIoxA2';
+      return request.auth != null
+        && exists(/databases/$(database)/documents/hosts/$(request.auth.uid));
     }
     function isSelf(uid) {
       return request.auth != null && request.auth.uid == uid;
@@ -55,6 +56,11 @@ service cloud.firestore {
         && okAnswer(a, 'q28')
         && okAnswer(a, 'q29')
         && okAnswer(a, 'q30');
+    }
+
+    // Conduttori: un documento per UID, gestito solo dalla console Firebase.
+    match /hosts/{uid} {
+      allow get: if isSelf(uid);
     }
 
     // Testo delle domande (senza soluzioni): pubblico.
