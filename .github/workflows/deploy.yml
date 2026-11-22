@@ -1,0 +1,34 @@
+name: Deploy su Firebase
+
+on:
+  push:
+    branches: [main]   # un merge in main genera un push su main
+  workflow_dispatch:   # permette anche di lanciarlo a mano dalla tab Actions
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Installa Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Credenziali service account
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$RUNNER_TEMP/sa.json"
+
+      - name: npm run deploy
+        run: npm run deploy -- --non-interactive
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json

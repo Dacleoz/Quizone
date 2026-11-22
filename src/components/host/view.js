@@ -4,7 +4,7 @@ import { H, Q, isHost } from "./state.js";
 import { computeRows, solutionText } from "./scoring.js";
 import accountTpl from "./account/account.html?raw";
 import loginTpl from "./login/login.html?raw";
-import solutionsTpl from "./solutions/solutions.html?raw";
+import solutionsTpl from "../shared/solutions.html?raw";
 import deleteTpl from "./delete-game/delete-game.html?raw";
 import questions from "./questions/questions.js";
 import games from "./games/games.js";
@@ -26,7 +26,10 @@ export function renderView() {
     share(),
     gamePanel(rows),
     grading(rows),
-    html(solutionsTpl, { solutions: Q().map((q) => ({ n: q.n, text: solutionText(q) })) }),
+    html(solutionsTpl, {
+      solutions: Q().map((q) => ({ n: q.n, text: solutionText(q) })),
+      solutionsOpen: H.openKeys.has("solutions"),
+    }),
     html(deleteTpl, H),
   ].join("") : ""));
   drawQr($view);
@@ -35,6 +38,6 @@ export function renderView() {
 
 export function render() {
   $account.innerHTML = html(accountTpl, { email: H.user && !H.user.isAnonymous && H.user.email });
-  renderClock(isHost() && H.game, computeRows(), () => `Partita ${H.code}`);
+  renderClock(isHost() && H.game, () => `Partita ${H.code}`, computeRows());
   renderView();
 }

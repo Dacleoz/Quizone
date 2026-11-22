@@ -52,10 +52,14 @@ header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: 
 .brand h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 6vw, 40px); line-height: 1; margin: 0; letter-spacing: -.02em; }
 .brand h1 span { background: var(--accent); color: var(--accent-ink); padding: 0 .18em; border-radius: 6px; }
 .brand p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
-nav.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
-nav.tabs button { font: 600 14px var(--f-body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; justify-content: center; }
-nav.tabs button[aria-current="page"] { background: var(--ink); color: var(--bg); }
-nav.tabs .count { font: 700 12px var(--f-mono); opacity: .8; }
+.brand p:empty { display: none; }
+
+.winner { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: grid; place-items: end center; padding-bottom: 8vh; }
+.winner canvas { position: absolute; inset: 0; }
+.winner .back { position: absolute; top: 16px; left: 16px; background: var(--surface); }
+.winner h2 { position: relative; font-size: clamp(28px, 6vw, 80px); font-weight: 800; text-align: center; }
+.winner-btn { all: unset; cursor: pointer; color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.winner-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 
 .clock { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--ink); color: var(--bg); border-radius: 14px; padding: 10px 16px; box-shadow: var(--shadow); }
 .clock .lbl { font: 700 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
@@ -80,7 +84,7 @@ input.text:focus { outline: none; border-color: var(--blue); }
 input.code { text-transform: uppercase; letter-spacing: .2em; font-family: var(--f-mono); font-weight: 700; }
 
 .btn { font: 700 15px var(--f-body); border-radius: 12px; padding: 12px 18px; cursor: pointer; border: 2px solid transparent; display: inline-flex; align-items: center; gap: 8px; justify-content: center; min-height: 48px; text-decoration: none; }
-.btn:focus-visible, nav.tabs button:focus-visible, .opt:focus-visible, .mini:focus-visible, summary:focus-visible, .seg button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.btn:focus-visible, .opt:focus-visible, .mini:focus-visible, summary:focus-visible, .seg button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }
 .btn.primary:hover { filter: brightness(1.05); }
 .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
@@ -189,14 +193,15 @@ details.player[open] summary { border-bottom: 1px solid var(--line); }
 .seg button[aria-pressed="true"].a { background: var(--ink); color: var(--bg); }
 .solutions { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; font-size: 14px; }
 .solutions b { font-family: var(--f-mono); color: var(--muted); margin-right: 6px; }
+.sols summary { cursor: pointer; }
+.sols h2 { display: inline; }
+.sols[open] summary { margin-bottom: 12px; }
 
 @media (max-width: 560px) {
   body { padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 15px; }
   .wrap { gap: 12px; }
   header.top { flex-direction: column; align-items: stretch; gap: 10px; }
   .brand p { font-size: 13px; }
-  nav.tabs { width: 100%; }
-  nav.tabs button { flex: 1; padding: 9px 6px; }
   .card { border-radius: 14px; gap: 14px; }
   .clock { border-radius: 12px; padding: 8px 12px; }
   .clock .t { font-size: 22px; }

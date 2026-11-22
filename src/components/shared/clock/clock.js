@@ -6,13 +6,17 @@ import { msOf, plural } from "../../../lib/utils.js";
 const $clock = document.getElementById("clock");
 let labelFor = () => "";
 
-/** Sticky clock bar, shown while a game runs or after it ended. `label(ended)` gives its caption. */
-export function renderClock(game, rows, label) {
+/** Sticky clock bar, shown while a game runs or after it ended. `label(ended)` gives its caption; `rows`, if given, adds the connected/sent counts. */
+export function renderClock(game, label, rows) {
   $clock.hidden = !["running", "ended"].includes(game?.status);
   if ($clock.hidden) return;
   labelFor = label;
-  const sent = rows.filter((r) => r.state === "final").length;
-  $clock.innerHTML = html(template, { players: plural(rows.length, "collegato", "collegati"), sent: plural(sent, "ha inviato", "hanno inviato") });
+  $clock.innerHTML = html(template, {
+    meta: rows && {
+      players: plural(rows.length, "collegato", "collegati"),
+      sent: plural(rows.filter((r) => r.state === "final").length, "ha inviato", "hanno inviato"),
+    },
+  });
   tickClock(game);
 }
 

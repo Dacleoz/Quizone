@@ -2,7 +2,7 @@ export const H = {
   user: null, isHost: false, authReady: false, busy: false, error: "", info: "",
   questions: null, solutions: null, games: [],
   code: "", game: null, players: new Map(), grading: new Map(),
-  confirmDelete: false, openPlayers: new Set(),
+  confirmDelete: false, openKeys: new Set(),
 };
 
 export const Q = () => H.questions || [];

@@ -9,7 +9,7 @@ import { startHost, stopHost, checkEnded } from "./data.js";
 import { actions, importFile } from "./actions.js";
 
 delegate(actions);
-trackOpen(H.openPlayers);
+trackOpen(H.openKeys);
 document.addEventListener("change", ({ target: t }) => {
   if (t.dataset.input === "quiz" && t.files[0]) importFile(t.files[0]);
 });

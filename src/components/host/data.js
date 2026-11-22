@@ -16,7 +16,7 @@ export function onData() { render(); scheduleBoard(); }
 
 export function selectGame(code) {
   gameUnsubs.forEach((u) => u());
-  Object.assign(H, { code, game: null, players: new Map(), grading: new Map(), confirmDelete: false, openPlayers: new Set() });
+  Object.assign(H, { code, game: null, players: new Map(), grading: new Map(), confirmDelete: false, openKeys: new Set() });
   resetPublished();
   saveLocal(CODE_KEY, code);
   render();

@@ -11,7 +11,6 @@
         <button class="btn ghost" data-act="addFive" {{#busy}}disabled{{/busy}}>+5 minuti</button>
         <button class="btn danger" data-act="endNow" {{#busy}}disabled{{/busy}}>Termina ora</button>
       {{/running}}
-      {{#ended}}<span class="lead small">Partita chiusa. Per rigiocare crea una nuova partita.</span>{{/ended}}
       {{#waiting}}<button class="btn primary" data-act="startGame" {{#cantStart}}disabled{{/cantStart}}>Avvia ({{minutes}} min)</button>{{/waiting}}
     </div>
   </div>
