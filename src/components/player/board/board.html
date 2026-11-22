@@ -2,11 +2,9 @@
   <div class="row"><h2>Classifica</h2><span class="eyebrow">Partita {{code}}</span></div>
   <div class="stats">
     <span>{{phase}}</span><span>{{connected}}</span><span>{{sent}}</span>
-    {{#timer}}<span>Tempo <b data-timer>--:--</b></span>{{/timer}}
   </div>
   {{#empty}}
     {{> emptyState}}
-    {{#canJoin}}<div><button class="btn primary" data-act="tab" data-tab="play">Entra in partita</button></div>{{/canJoin}}
   {{/empty}}
   {{#finals.length}}
   <h3>Punteggi</h3>
@@ -14,7 +12,7 @@
     {{#finals}}
     <li class="{{#mine}}me{{/mine}}">
       <span class="rank {{rankCls}}">{{rank}}</span>
-      <span class="who"><span class="name">{{name}}{{#mine}}<span class="tag">TU</span>{{/mine}}</span><span class="sub">{{right}}/{{count}} giuste · {{time}}</span></span>
+      <span class="who"><span class="name">{{#first}}<button class="winner-btn" data-act="winner">{{name}}</button>{{/first}}{{^first}}{{name}}{{/first}}{{#mine}}<span class="tag">TU</span>{{/mine}}</span><span class="sub">{{right}}/{{count}} giuste · {{time}}</span></span>
       <span class="score">{{pts}}<small>PUNTI</small></span>
     </li>
     {{/finals}}
@@ -34,3 +32,4 @@
   {{/others.length}}
   {{#finals.length}}<p class="lead small">Su {{total}} punti. I punti compaiono quando una persona invia. A parità di punti è avanti chi ha finito prima.</p>{{/finals.length}}
 </section>
+{{#solutions.length}}{{> solutions}}{{/solutions.length}}

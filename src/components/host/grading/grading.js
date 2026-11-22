@@ -12,7 +12,7 @@ export default (rows) => html(template, {
   players: rows.map((r) => ({
     uid: r.uid,
     name: r.name,
-    open: H.openPlayers.has(r.uid),
+    open: H.openKeys.has(r.uid),
     score: r.state === "final" ? `${r.pts} pt` : `${r.answered}/${Q().length} risposte`,
     answers: scoreOf(r.uid, H.players.get(r.uid)).per.map(({ q, a, auto, ov }) => {
       const current = typeof ov === "boolean" ? (ov ? "y" : "n") : "a";

@@ -71,13 +71,6 @@ export const actions = {
   submit: () => submit(false),
   prev: () => goQ(Math.max(0, P.idx - 1)),
   goto: ({ i }) => goQ(Number(i)),
-  tab: ({ tab }) => {
-    P.view = tab; P.error = "";
-    const u = new URL(location.href);
-    tab === "board" ? u.searchParams.set("v", "classifica") : u.searchParams.delete("v");
-    history.replaceState(null, "", u);
-    render(); scrollTop();
-  },
   choose: ({ i }, el) => {
     if (!running()) return;
     P.answers["q" + Q()[P.idx].n] = Number(i);

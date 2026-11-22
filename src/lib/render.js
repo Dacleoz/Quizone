@@ -2,8 +2,9 @@ import Mustache from "mustache";
 import error from "../components/shared/error.html?raw";
 import emptyState from "../components/shared/empty-state.html?raw";
 import answerList from "../components/shared/answer-list.html?raw";
+import solutions from "../components/shared/solutions.html?raw";
 
-const partials = { error, emptyState, answerList };
+const partials = { error, emptyState, answerList, solutions };
 
 export const html = (template, view) => Mustache.render(template, view, partials);
 

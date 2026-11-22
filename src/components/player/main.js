@@ -1,11 +1,10 @@
 import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../../lib/firebase.js";
-import { GAME_MIN } from "../../lib/game.js";
 import { delegate } from "../../lib/render.js";
 import { loadLocal } from "../../lib/utils.js";
 import { tickClock } from "../shared/clock/clock.js";
-import { P, Q, ended, running, playPhase, playKey, nameKey, answerOf } from "./state.js";
+import { P, Q, finals, ended, running, playPhase, playKey, nameKey, answerOf } from "./state.js";
 import { render, renderChrome, renderView } from "./view.js";
 import { actions, scheduleSave, submit, next } from "./actions.js";
 
@@ -35,7 +34,6 @@ function watchGame() {
     onSnapshot(ref(), (s) => {
       if (!s.exists()) { P.status = "notfound"; return render(); }
       P.game = s.data(); P.status = "ready"; endedSeen = ended();
-      document.getElementById("subtitle").textContent = `Partita ${P.code} · ${GAME_MIN} minuti`;
       onData();
     }, fail),
     onSnapshot(ref("public", "board"), (s) => { P.board = s.data() || null; onData(); }, () => {}),
@@ -46,6 +44,7 @@ function watchGame() {
 
 delegate({
   ...actions,
+  winner: () => import("./winner/winner.js").then((m) => m.default(finals()[0].name)),
   enterCode: (_, form) => {
     const code = form.elements.code.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
     if (!code) return;
