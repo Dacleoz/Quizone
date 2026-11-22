@@ -47,7 +47,7 @@ export function computeRows(end = gameEnded(H.game)) {
     if (p.status !== "submitted" && !end) return { ...row, state: waiting ? "waiting" : "playing" };
     const sc = scoreOf(uid, p);
     const finishedAt = msOf(p.submittedAt) || msOf(H.game.endsAt) || now;
-    return { ...row, state: "final", pts: sc.pts, right: sc.right, finishedAt, ok: end ? sc.per.map((x) => x.ok) : null };
+    return { ...row, state: "final", pts: sc.pts, right: sc.right, finishedAt, elapsedSec: Math.round((finishedAt - msOf(H.game.startedAt)) / 1000), ok: end ? sc.per.map((x) => x.ok) : null };
   });
   const finals = list.filter((r) => r.state === "final").sort((a, b) => b.pts - a.pts || a.finishedAt - b.finishedAt);
   const others = list.filter((r) => r.state !== "final").sort((a, b) => b.answered - a.answered || a.name.localeCompare(b.name));
