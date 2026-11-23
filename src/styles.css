@@ -228,3 +228,9 @@ details.player[open] summary { border-bottom: 1px solid var(--line); }
   .card { animation: rise .25s ease-out; }
   @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
 }
+
+/* Rendered Markdown (instruction.html) */
+.md > * { margin: 0; }
+.md ul, .md ol { padding-left: 1.4em; }
+.md blockquote { border-left: 3px solid var(--line); padding-left: 12px; color: var(--muted); }
+.md img { max-width: 100%; }
