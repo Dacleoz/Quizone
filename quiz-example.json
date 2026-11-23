@@ -22,6 +22,8 @@
       "solution": "Antalya", "groups": [["antalya", "antalia"]] },
     { "n": 10, "pts": 10, "type": "open", "text": "Secondo la BCE, l’euro digitale è già stato emesso oppure è ancora un progetto in preparazione?",
       "solution": "È ancora un progetto in preparazione",
-      "groups": [["progetto", "preparazione", "non ancora", "non e ancora", "in sviluppo", "in fase", "non emesso", "non e stato emesso"]] }
+      "groups": [["progetto", "preparazione", "non ancora", "non e ancora", "in sviluppo", "in fase", "non emesso", "non e stato emesso"]] },
+    { "n": 11, "pts": 11, "type": "order", "text": "Metti in ordine i pianeti",
+      "items": ["Giove", "Terra", "Marte", "Venere"] }
   ]
 }

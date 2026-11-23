@@ -2,6 +2,8 @@ import { fmtClock, msOf } from "./utils.js";
 
 export const GAME_MIN = 30;
 export const LETTERS = ["A", "B", "C", "D", "E", "F"];
+/** "order" answers and solutions are stored as the items joined by this separator. */
+export const ARROW = " → ";
 
 export const answerText = (q, a) => q.type === "choice"
   ? (typeof a === "number" && q.options?.[a] != null ? `${LETTERS[a]}) ${q.options[a]}` : "")

@@ -1,6 +1,6 @@
 import { doc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase.js";
-import { answeredCount } from "../../lib/game.js";
+import { ARROW, answeredCount } from "../../lib/game.js";
 import { norm, saveLocal } from "../../lib/utils.js";
 import { P, Q, rows, ended, running, nameKey } from "./state.js";
 import { render, renderView, setSaved } from "./view.js";
@@ -58,6 +58,13 @@ async function join() {
   try { await setDoc(meRef(), { name, status: "playing", answers: {}, answered: 0, joinedAt: serverTimestamp() }); }
   catch (e) { P.error = friendly(e, "Non è stato possibile entrare. Riprova."); }
   P.busy = false; render();
+}
+
+/** "order" question: the answer is the dragged list, joined by ARROW. */
+export function saveOrder(list) {
+  if (!running()) return;
+  P.answers["q" + Q()[P.idx].n] = [...list.children].map((li) => li.textContent).join(ARROW);
+  scheduleSave();
 }
 
 /* ---------- navigation ---------- */

@@ -1,7 +1,7 @@
 // Scoring runs only on the host page: it is the only client allowed to read the solutions.
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase.js";
-import { LETTERS, answeredCount, gameEnded, resultsOpen } from "../../lib/game.js";
+import { ARROW, LETTERS, answeredCount, gameEnded, resultsOpen } from "../../lib/game.js";
 import { msOf, norm } from "../../lib/utils.js";
 import { H, Q } from "./state.js";
 
@@ -11,6 +11,7 @@ function autoCheck(q, a) {
   const s = solFor(q.n);
   if (!s) return false;
   if (q.type === "choice") return a === s.correct;
+  if (q.type === "order") return a === s.order.join(ARROW);
   const t = ` ${norm(a)} `;
   // Every group ({ any: [...] }) must match at least one of its accepted words.
   return !!t.trim() && s.groups.every((g) => g.any.some((w) => t.includes(` ${norm(w)} `)));
@@ -19,6 +20,7 @@ function autoCheck(q, a) {
 export function solutionText(q) {
   const s = solFor(q.n);
   if (!s) return "?";
+  if (q.type === "order") return s.order.join(ARROW);
   return q.type === "choice" ? `${LETTERS[s.correct]}) ${q.options[s.correct]}` : s.solution;
 }
 

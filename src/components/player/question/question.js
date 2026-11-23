@@ -1,6 +1,6 @@
 import template from "./question.html?raw";
 import { html } from "../../../lib/render.js";
-import { LETTERS } from "../../../lib/game.js";
+import { ARROW, LETTERS } from "../../../lib/game.js";
 import { plural } from "../../../lib/utils.js";
 import { P, Q } from "../state.js";
 import progress from "../progress/progress.js";
@@ -14,6 +14,8 @@ export default () => {
     count: Q().length,
     points: plural(q.pts, "punto", "punti"),
     options: q.type === "choice" ? q.options.map((text, i) => ({ i, text, letter: LETTERS[i], pressed: a === i })) : [],
+    items: q.type === "order" ? (a ? a.split(ARROW) : q.items) : [],
+    open: q.type === "open",
     answer: a ?? "",
     first: P.idx === 0,
     last: P.idx === Q().length - 1,

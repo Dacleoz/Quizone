@@ -1,5 +1,7 @@
+import Sortable from "sortablejs";
 import { mount } from "../../lib/render.js";
 import { GAME_MIN } from "../../lib/game.js";
+import { saveOrder } from "./actions.js";
 import { renderClock, tickClock } from "../shared/clock/clock.js";
 import { P, playPhase, playKey } from "./state.js";
 import message from "./message/message.js";
@@ -25,6 +27,8 @@ export function renderView() {
   P.playKey = playKey();
   const phase = playPhase();
   mount($view, P.view === "board" && P.status === "ready" ? board() : (screens[phase] || message)(phase));
+  const list = $view.querySelector("[data-sortable]");
+  if (list) Sortable.create(list, { animation: 150, onEnd: () => saveOrder(list) });
   tickClock(P.game);
 }
 
