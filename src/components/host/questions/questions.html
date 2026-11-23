@@ -1,10 +1,12 @@
 <section class="card">
-  <div class="row"><h2>Domande</h2><span class="eyebrow">{{#loaded}}{{loaded}}{{/loaded}}{{^loaded}}Da caricare{{/loaded}}</span></div>
-  {{#loaded}}<p class="lead small">Domande e soluzioni sono nel database. Le soluzioni le vede solo questo account. Per cambiarle, carica di nuovo il file <b>quiz.json</b> modificato.</p>{{/loaded}}
-  {{^loaded}}<p class="lead">Carica il file <b>data/quiz.json</b> del progetto per mettere domande e soluzioni nel database.</p>{{/loaded}}
-  <div>
-    <label class="btn {{#loaded}}ghost{{/loaded}}{{^loaded}}primary{{/loaded}}">{{#loaded}}Ricarica{{/loaded}}{{^loaded}}Carica{{/loaded}} quiz.json
-      <input type="file" data-input="quiz" accept="application/json,.json" hidden>
-    </label>
-  </div>
+  <details class="sols" data-key="questions" {{#open}}open{{/open}}>
+    <summary><h2>Domande</h2> <span class="eyebrow">{{#loaded}}{{loaded}}{{/loaded}}{{^loaded}}Da caricare{{/loaded}}</span></summary>
+    {{#loaded}}<p class="lead small">Domande e soluzioni sono nel database. Le soluzioni le vede solo questo account. Per cambiarle, carica di nuovo il file <b>quiz.json</b> modificato.</p>{{/loaded}}
+    {{^loaded}}<p class="lead">Carica il file <b>data/quiz.json</b> del progetto per mettere domande e soluzioni nel database.</p>{{/loaded}}
+    <div>
+      <label class="btn {{#loaded}}ghost{{/loaded}}{{^loaded}}primary{{/loaded}}">{{#loaded}}Ricarica{{/loaded}}{{^loaded}}Carica{{/loaded}} quiz.json
+        <input type="file" data-input="quiz" accept="application/json,.json" hidden>
+      </label>
+    </div>
+  </details>
 </section>

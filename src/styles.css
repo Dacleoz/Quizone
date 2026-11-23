@@ -195,6 +195,8 @@ details.player[open] summary { border-bottom: 1px solid var(--line); }
 .solutions b { font-family: var(--f-mono); color: var(--muted); margin-right: 6px; }
 .sols summary { cursor: pointer; }
 .sols h2 { display: inline; }
+.sols summary .eyebrow { margin-left: 8px; }
+.sols > p + div { margin-top: 12px; }
 .sols[open] summary { margin-bottom: 12px; }
 
 @media (max-width: 560px) {

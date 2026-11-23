@@ -5,5 +5,6 @@ import { H, Q } from "../state.js";
 
 export default () => {
   const n = Q().length;
-  return html(template, { loaded: n && H.solutions?.length === n && `${n} domande · ${totalPoints(Q())} punti` });
+  const loaded = n && H.solutions?.length === n && `${n} domande · ${totalPoints(Q())} punti`;
+  return html(template, { loaded, open: H.openKeys.has("questions") });
 };

@@ -1,5 +1,6 @@
 <section class="card">
-  <div class="row"><h2>Classifica</h2><span class="eyebrow">Partita {{code}}</span></div>
+  <details class="sols" data-key="board" {{#boardOpen}}open{{/boardOpen}}>
+  <summary><h2>Classifica</h2> <span class="eyebrow">Partita {{code}}</span></summary>
   <div class="stats">
     <span>{{phase}}</span><span>{{connected}}</span><span>{{sent}}</span>
   </div>
@@ -31,5 +32,6 @@
   </ul>
   {{/others.length}}
   {{#finals.length}}<p class="lead small">Su {{total}} punti. I punti compaiono quando una persona invia. A parità di punti è avanti chi ha finito prima.</p>{{/finals.length}}
+  </details>
 </section>
 {{#solutions.length}}{{> solutions}}{{/solutions.length}}
