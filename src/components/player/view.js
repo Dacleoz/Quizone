@@ -16,7 +16,7 @@ const $subtitle = document.getElementById("subtitle");
 const screens = { nocode: codeForm, notfound: codeForm, name: nameForm, lobby, question, review, results };
 
 export function renderChrome() {
-  // leaderboard (projector link ?v=classifica): game info, no clock; players: the opposite
+  // leaderboard (projector link ?v=ranking): game info, no clock; players: the opposite
   if (P.view === "board") $subtitle.textContent = P.status === "ready" ? `Partita ${P.code} · ${GAME_MIN} minuti` : "";
   else renderClock(P.game, (ended) => (ended ? "Tempo scaduto" : "Tempo rimasto"));
 }

@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import song from "./champions.mp3";
 
-/* Full-screen winner overlay (outside #view, so board re-renders don't touch it): spinning gold cup, falling confetti, song. */
 export default function showWinner(name) {
   const el = document.createElement("div");
   el.className = "winner";
@@ -21,7 +20,6 @@ export default function showWinner(name) {
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
   camera.position.set(0, 1.6, 7);
 
-  // cup: lathe profile (base, stem, bowl) + two handles
   const gold = new THREE.MeshStandardMaterial({ color: css("--gold"), metalness: 1, roughness: 0.25, side: THREE.DoubleSide });
   const cup = new THREE.Group();
   const profile = [[0, 0], [0.8, 0], [0.8, 0.15], [0.45, 0.3], [0.14, 0.45], [0.12, 1], [0.3, 1.2], [0.75, 1.55], [0.95, 2.1], [1, 2.7]];
@@ -35,7 +33,6 @@ export default function showWinner(name) {
   cup.position.y = 0.5;
   scene.add(cup);
 
-  // confetti in the app's colours
   const N = 250, colors = ["--gold", "--accent", "--blue", "--ok", "--bad"].map((v) => new THREE.Color(css(v)));
   const bits = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.14, 0.07), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }), N);
   const parts = Array.from({ length: N }, (_, i) => {
