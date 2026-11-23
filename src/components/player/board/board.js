@@ -30,5 +30,6 @@ export default () => {
     })),
     solutions,
     solutionsOpen: openKeys.has("solutions"),
+    boardOpen: openKeys.has("board"),
   });
 };

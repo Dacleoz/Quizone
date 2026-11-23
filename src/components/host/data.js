@@ -16,7 +16,8 @@ export function onData() { render(); scheduleBoard(); }
 
 export function selectGame(code) {
   gameUnsubs.forEach((u) => u());
-  Object.assign(H, { code, game: null, players: new Map(), grading: new Map(), confirmDelete: false, openKeys: new Set() });
+  Object.assign(H, { code, game: null, gameSolutions: null, players: new Map(), grading: new Map(), confirmDelete: false });
+  H.openKeys.forEach((k) => k !== "questions" && H.openKeys.delete(k)); // stesso Set usato da trackOpen
   resetPublished();
   saveLocal(CODE_KEY, code);
   render();
@@ -28,6 +29,7 @@ export function selectGame(code) {
     }, () => {}),
     onSnapshot(collection(db, "games", code, "players"), (s) => { H.players = docsMap(s); onData(); }, () => {}),
     onSnapshot(collection(db, "games", code, "grading"), (s) => { H.grading = docsMap(s); onData(); }, () => {}),
+    onSnapshot(doc(db, "games", code, "secret", "solutions"), (s) => { H.gameSolutions = s.data()?.list || null; onData(); }, () => {}),
   ];
 }
 

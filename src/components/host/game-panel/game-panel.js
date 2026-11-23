@@ -10,7 +10,7 @@ export default (rows) => {
     ...H,
     running, ended,
     waiting: !running && !ended,
-    cantStart: H.busy || !H.solutions,
+    cantStart: H.busy || !H.gameSolutions,
     minutes: GAME_MIN,
     phase: phaseLabel(H.game),
     endsAt: fmtTime(msOf(H.game.endsAt)),

@@ -7,11 +7,12 @@
       {{#running}}<div class="lead small">Fine alle {{endsAt}}</div>{{/running}}
     </div>
     <div class="btns">
+      <a class="btn ghost" href="/instruction.html" target="_blank" rel="noopener">Istruzioni per i giocatori</a>
       {{#running}}
         <button class="btn ghost" data-act="addFive" {{#busy}}disabled{{/busy}}>+5 minuti</button>
         <button class="btn danger" data-act="endNow" {{#busy}}disabled{{/busy}}>Termina ora</button>
       {{/running}}
-      {{#waiting}}<button class="btn primary" data-act="startGame" {{#cantStart}}disabled{{/cantStart}}>Avvia ({{minutes}} min)</button>{{/waiting}}
+      {{#waiting}}<button class="btn primary" data-act="startGame" {{#cantStart}}disabled{{/cantStart}}>Avvia</button>{{/waiting}}
     </div>
   </div>
   <div class="note">Tieni aperta questa pagina durante la partita: è lei che calcola i punteggi e aggiorna la classifica che vedono i giocatori.</div>

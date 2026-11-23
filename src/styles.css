@@ -112,6 +112,9 @@ main.stack { gap: 16px; }
 .opt .letter { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; font: 800 15px var(--f-mono); background: var(--surface); border: 1px solid var(--line); }
 .opt[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
 .opt[aria-pressed="true"] .letter { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+[data-sortable] { padding: 0; margin: 0; list-style: none; }
+[data-sortable] .opt { cursor: grab; touch-action: none; }
+.opt.sortable-ghost { opacity: .4; }
 .hint { color: var(--muted); font-size: 14px; margin: -6px 0 0; }
 .qactions { display: flex; gap: 10px; justify-content: space-between; }
 .saved { font: 600 12px var(--f-mono); color: var(--muted); text-align: right; min-height: 1em; }
@@ -195,6 +198,8 @@ details.player[open] summary { border-bottom: 1px solid var(--line); }
 .solutions b { font-family: var(--f-mono); color: var(--muted); margin-right: 6px; }
 .sols summary { cursor: pointer; }
 .sols h2 { display: inline; }
+.sols summary .eyebrow { margin-left: 8px; }
+.sols > p + div { margin-top: 12px; }
 .sols[open] summary { margin-bottom: 12px; }
 
 @media (max-width: 560px) {
@@ -226,3 +231,9 @@ details.player[open] summary { border-bottom: 1px solid var(--line); }
   .card { animation: rise .25s ease-out; }
   @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
 }
+
+/* Rendered Markdown (instruction.html) */
+.md > * { margin: 0; }
+.md ul, .md ol { padding-left: 1.4em; }
+.md blockquote { border-left: 3px solid var(--line); padding-left: 12px; color: var(--muted); }
+.md img { max-width: 100%; }
