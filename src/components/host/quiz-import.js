@@ -22,7 +22,6 @@ function validate(data) {
   return list;
 }
 
-/** Split quiz.json into public questions and host-only solutions. */
 export async function importQuiz(file) {
   let data;
   try { data = JSON.parse(await file.text()); } catch { fail("Il file non è un JSON valido."); }

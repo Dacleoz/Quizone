@@ -67,8 +67,6 @@ setInterval(() => {
   if (e && P.me?.status === "playing" && !autoTried) { autoTried = true; submit(true); }
 }, 1000);
 
-onSnapshot(doc(db, "quiz", "questions"), (s) => { P.questions = s.data()?.list || []; onData(); }, () => {});
-
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     signInAnonymously(auth).catch(() => {

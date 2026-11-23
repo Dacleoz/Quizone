@@ -5,7 +5,7 @@ import { LETTERS, answeredCount, gameEnded, resultsOpen } from "../../lib/game.j
 import { msOf, norm } from "../../lib/utils.js";
 import { H, Q } from "./state.js";
 
-const solFor = (n) => H.solutions?.find((s) => s.n === n);
+const solFor = (n) => H.gameSolutions?.find((s) => s.n === n);
 
 function autoCheck(q, a) {
   const s = solFor(q.n);
@@ -61,7 +61,7 @@ export const resetPublished = () => { lastBoard = lastReveal = ""; };
 export function scheduleBoard() { clearTimeout(timer); timer = setTimeout(writeBoard, 600); }
 
 async function writeBoard() {
-  if (!H.code || !H.game || !H.questions || !H.solutions) return;
+  if (!H.code || !H.game || !H.gameSolutions) return;
   const rows = computeRows(resultsOpen(H.game));
   const key = H.code + JSON.stringify(rows);
   if (key !== lastBoard) {

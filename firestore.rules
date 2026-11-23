@@ -88,6 +88,11 @@ service cloud.firestore {
         allow write: if isHost();
       }
 
+      // Soluzioni copiate nella partita alla creazione: solo conduttore.
+      match /secret/{docId} {
+        allow read, write: if isHost();
+      }
+
       // Correzioni manuali del conduttore.
       match /grading/{uid} {
         allow read, write: if isHost();

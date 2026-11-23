@@ -46,7 +46,8 @@ export const actions = {
   newGame: () => run(async () => {
     let code = newCode();
     for (let i = 0; i < 5 && (await getDoc(doc(db, "games", code))).exists(); i++) code = newCode();
-    await setDoc(doc(db, "games", code), { status: "waiting", createdAt: serverTimestamp(), durationMin: GAME_MIN });
+    await setDoc(doc(db, "games", code), { status: "waiting", createdAt: serverTimestamp(), durationMin: GAME_MIN, questions: H.questions });
+    await setDoc(doc(db, "games", code, "secret", "solutions"), { list: H.solutions });
     selectGame(code);
   }, "Partita creata: manda il link ai giocatori."),
   startGame: () => run(() => updateDoc(gameRef(), { status: "running", startedAt: serverTimestamp(), endsAt: minutesFromNow(GAME_MIN) })),
@@ -63,7 +64,7 @@ export const actions = {
   deleteGame: () => {
     const code = H.code;
     return run(async () => {
-      for (const sub of ["players", "grading", "public"]) {
+      for (const sub of ["players", "grading", "public", "secret"]) {
         for (const d of (await getDocs(collection(db, "games", code, sub))).docs) await deleteDoc(d.ref);
       }
       await deleteDoc(doc(db, "games", code));

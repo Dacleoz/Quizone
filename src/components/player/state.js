@@ -6,13 +6,13 @@ export const P = {
   code: (params.get("g") || "").toUpperCase().replace(/[^A-Z0-9]/g, ""),
   uid: null,
   status: "loading", // loading | nocode | notfound | ready | error
-  view: params.get("v") === "classifica" ? "board" : "play",
-  questions: null, game: null, board: null, reveal: null,
+  view: params.get("v") === "ranking" ? "board" : "play",
+  game: null, board: null, reveal: null,
   me: null, meLoaded: false, name: "", answers: {}, answersLoaded: false,
   step: "q", idx: 0, busy: false, error: "", playKey: "",
 };
 
-export const Q = () => P.questions || [];
+export const Q = () => P.game?.questions || [];
 export const ended = () => gameEnded(P.game);
 export const running = () => gameRunning(P.game);
 export const rows = () => P.board?.rows || [];
@@ -22,7 +22,7 @@ export const answerOf = (q, answers = P.answers) => answerText(q, answers["q" + 
 
 export function playPhase() {
   if (["nocode", "notfound", "error"].includes(P.status)) return P.status;
-  if (P.status !== "ready" || !P.questions || !P.game || !P.meLoaded) return "loading";
+  if (P.status !== "ready" || !P.game || !P.meLoaded) return "loading";
   if (P.me && (P.me.status === "submitted" || ended())) return "results";
   if (!P.me) return ended() ? "over" : "name";
   if (!running()) return "lobby";
