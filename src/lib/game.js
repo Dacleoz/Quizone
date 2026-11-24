@@ -17,9 +17,11 @@ export const gameEnded = (game, now = Date.now()) => !!game && (game.status === 
 /**
  * Players may still save answers for 60 s after the end (see firestore.rules), so per-answer results
  * and solutions are published only after this delay; the extra 30 s absorb clock drift.
+ * Once every player has submitted nobody can change answers any more, so results open right away.
  */
 export const REVEAL_DELAY_MS = 90_000;
-export const resultsOpen = (game, now = Date.now()) => gameEnded(game, now) && now >= msOf(game.endsAt) + REVEAL_DELAY_MS;
+export const resultsOpen = (game, players = [], now = Date.now()) => gameEnded(game, now)
+  && (now >= msOf(game.endsAt) + REVEAL_DELAY_MS || [...players].every((p) => p?.status === "submitted"));
 export const gameRunning = (game, now = Date.now()) => game?.status === "running" && !gameEnded(game, now);
 export const phaseLabel = (game) => gameRunning(game) ? "Partita in corso" : gameEnded(game) ? "Partita conclusa" : "In attesa di avvio";
 

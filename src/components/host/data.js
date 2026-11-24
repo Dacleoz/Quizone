@@ -10,14 +10,14 @@ import { resetPublished, scheduleBoard } from "./scoring.js";
 const CODE_KEY = "quiz2026-host-code";
 const docsMap = (s) => new Map(s.docs.map((d) => [d.id, d.data()]));
 let baseUnsubs = [], gameUnsubs = [], endedSeen = "";
-const endState = () => `${gameEnded(H.game)}|${resultsOpen(H.game)}`;
+const endState = () => `${gameEnded(H.game)}|${resultsOpen(H.game, H.players.values())}`;
 
 export function onData() { render(); scheduleBoard(); }
 
 export function selectGame(code) {
   gameUnsubs.forEach((u) => u());
   Object.assign(H, { code, game: null, gameSolutions: null, players: new Map(), grading: new Map(), confirmDelete: false });
-  H.openKeys.forEach((k) => k !== "questions" && H.openKeys.delete(k)); // stesso Set usato da trackOpen
+  H.openKeys.forEach((k) => k !== "questions" && H.openKeys.delete(k));
   resetPublished();
   saveLocal(CODE_KEY, code);
   render();

@@ -9,6 +9,6 @@ export default defineConfig({
     outDir: "../dist",
     emptyOutDir: true,
     chunkSizeWarningLimit: 700, // Firestore SDK alone is ~550 kB
-    rolldownOptions: { input: { index: page("index.html"), host: page("host.html"), instruction: page("instruction.html") } },
+    rolldownOptions: { input: { index: page("index.html"), host: page("host.html"), instruction: page("components/instruction/instruction.html") } },
   },
 });

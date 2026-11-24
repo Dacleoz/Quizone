@@ -39,7 +39,7 @@ export function scoreOf(uid, p) {
 /**
  * Leaderboard rows: final scores first (by points, then finish time), then players still answering.
  * `end` decides when unsubmitted answers count as final: the host sees it at the end time,
- * the public board only once resultsOpen() (players can still save answers until then).
+ * the public board only once resultsOpen(): everyone submitted, or the save tolerance has passed.
  */
 export function computeRows(end = gameEnded(H.game)) {
   const now = Date.now();
@@ -64,7 +64,7 @@ export function scheduleBoard() { clearTimeout(timer); timer = setTimeout(writeB
 
 async function writeBoard() {
   if (!H.code || !H.game || !H.gameSolutions) return;
-  const rows = computeRows(resultsOpen(H.game));
+  const rows = computeRows(resultsOpen(H.game, H.players.values()));
   const key = H.code + JSON.stringify(rows);
   if (key !== lastBoard) {
     if (writing) { pending = true; return; }
@@ -74,7 +74,7 @@ async function writeBoard() {
     writing = false;
     if (pending) { pending = false; scheduleBoard(); }
   }
-  if (!resultsOpen(H.game)) return;
+  if (!resultsOpen(H.game, H.players.values())) return;
   const solutions = Q().map(solutionText);
   const revealKey = H.code + JSON.stringify(solutions);
   if (revealKey === lastReveal) return;
