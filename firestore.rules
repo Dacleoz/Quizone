@@ -119,7 +119,7 @@ service cloud.firestore {
 
         // Risposte modificabili solo a partita in corso (con 60 s di tolleranza dopo la fine)
         // e solo finché il giocatore non ha inviato. L'orario di invio lo mette il server.
-        // Le soluzioni vengono pubblicate solo dopo la tolleranza (vedi REVEAL_DELAY_MS in src/lib/game.js).
+        // Le soluzioni vengono pubblicate quando tutti hanno inviato o dopo la tolleranza (vedi resultsOpen in src/lib/game.js).
         allow update: if isSelf(uid)
           && resource.data.status == 'playing'
           && request.resource.data.keys().hasOnly(playerFields())
