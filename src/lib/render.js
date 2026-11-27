@@ -22,6 +22,7 @@ export function delegate(actions) {
     if (t && !t.disabled) actions[t.dataset.act]?.(t.dataset, t);
   });
   document.addEventListener("submit", (ev) => {
+    if (ev.target.method === "dialog") return; // let <form method="dialog"> close its dialog
     ev.preventDefault();
     actions[ev.target.dataset.act]?.(ev.target.dataset, ev.target);
   });

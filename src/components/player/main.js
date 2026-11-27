@@ -6,9 +6,9 @@ import { loadLocal } from "../../lib/utils.js";
 import { tickClock } from "../shared/clock/clock.js";
 import { P, Q, finals, ended, running, playPhase, playKey, nameKey, answerOf } from "./state.js";
 import { render, renderChrome, renderView } from "./view.js";
-import { actions, scheduleSave, submit, next } from "./actions.js";
+import { actions, scheduleSave, submit, next, penalize } from "./actions.js";
 
-let unsubs = [], autoTried = false, endedSeen = false;
+let unsubs = [], autoTried = false, endedSeen = false, away = false;
 
 /* data changed: refresh without disturbing someone who is typing */
 function onData() {
@@ -55,6 +55,13 @@ delegate({
 document.addEventListener("input", ({ target: t }) => {
   if (t.dataset.input === "name") P.name = t.value;
   if (t.dataset.input === "answer" && running()) { P.answers["q" + Q()[P.idx].n] = t.value; scheduleSave(); }
+});
+// leaving the tab while answering (e.g. to search online) costs PENALTY_PTS on return
+document.addEventListener("visibilitychange", () => {
+  const inGame = ["question", "review"].includes(playPhase());
+  if (document.hidden) { away = inGame; return; }
+  if (away && inGame) penalize();
+  away = false;
 });
 document.addEventListener("keydown", (ev) => {
   if (ev.key === "Enter" && ev.target.dataset.input === "answer") { ev.preventDefault(); next(); }

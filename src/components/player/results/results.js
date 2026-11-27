@@ -1,6 +1,6 @@
 import template from "./results.html?raw";
 import { html } from "../../../lib/render.js";
-import { totalPoints } from "../../../lib/game.js";
+import { PENALTY_PTS, totalPoints } from "../../../lib/game.js";
 import { plural } from "../../../lib/utils.js";
 import { P, Q, rows, finals, answerOf } from "../state.js";
 
@@ -17,6 +17,7 @@ export default () => {
       summary: `${row.right} risposte giuste su ${Q().length}`,
       still: still && plural(still, "persona sta", "persone stanno"),
     },
+    penalty: P.me.penalties > 0 && `${plural(P.me.penalties, "uscita", "uscite")} dal gioco · −${P.me.penalties * PENALTY_PTS} punti`,
     graded: !!row?.ok,
     items: Q().map((q, i) => {
       const ok = row?.ok?.[i];

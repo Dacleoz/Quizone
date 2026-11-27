@@ -54,6 +54,14 @@ header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: 
 .brand p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .brand p:empty { display: none; }
 
+.modal { border: 1px solid var(--line); border-radius: 22px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); padding: 28px 24px; width: min(360px, calc(100% - 32px)); text-align: center; animation: pop .25s ease-out; }
+.modal::backdrop { background: rgba(13,15,33,.6); backdrop-filter: blur(3px); }
+.modal form { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.modal-icon { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--bad-bg); color: var(--bad); font: 800 30px var(--f-display); }
+.modal-pts { font: 800 40px var(--f-mono); color: var(--bad); letter-spacing: -.02em; }
+.modal .btn { width: 100%; margin-top: 4px; }
+@keyframes pop { from { transform: scale(.9); opacity: 0; } }
+
 .winner { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: grid; place-items: end center; padding-bottom: 8vh; }
 .winner canvas { position: absolute; inset: 0; }
 .winner .back { position: absolute; top: 16px; left: 16px; background: var(--surface); }
