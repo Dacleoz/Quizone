@@ -1,6 +1,6 @@
-import { doc, setDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, updateDoc, serverTimestamp, increment } from "firebase/firestore";
 import { db } from "../../lib/firebase.js";
-import { ARROW, answeredCount } from "../../lib/game.js";
+import { ARROW, PENALTY_PTS, answeredCount } from "../../lib/game.js";
 import { norm, saveLocal } from "../../lib/utils.js";
 import { P, Q, rows, ended, running, nameKey } from "./state.js";
 import { render, renderView, setSaved } from "./view.js";
@@ -8,6 +8,13 @@ import { render, renderView, setSaved } from "./view.js";
 const meRef = () => doc(db, "games", P.code, "players", P.uid);
 const answersPatch = () => ({ answers: { ...P.answers }, answered: answeredCount(Q(), P.answers) });
 const scrollTop = () => window.scrollTo({ top: 0 });
+
+export function penalize() {
+  updateDoc(meRef(), { penalties: increment(1) }).catch(() => {});
+  const dlg = document.getElementById("penalty");
+  dlg.querySelector("[data-penalty]").textContent = PENALTY_PTS;
+  if (!dlg.open) dlg.showModal();
+}
 
 function friendly(e, fallback) {
   if (e?.code === "permission-denied") return "Operazione non consentita: la partita potrebbe essere già finita.";

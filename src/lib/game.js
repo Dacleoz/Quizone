@@ -1,6 +1,8 @@
 import { fmtClock, msOf } from "./utils.js";
 
 export const GAME_MIN = 30;
+/** Points removed each time a player leaves the browser tab while answering. */
+export const PENALTY_PTS = 5;
 export const LETTERS = ["A", "B", "C", "D", "E", "F"];
 /** "order" answers and solutions are stored as the items joined by this separator. */
 export const ARROW = " → ";

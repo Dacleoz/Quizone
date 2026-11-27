@@ -1,7 +1,7 @@
 // Scoring runs only on the host page: it is the only client allowed to read the solutions.
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../lib/firebase.js";
-import { ARROW, LETTERS, answeredCount, gameEnded, resultsOpen } from "../../lib/game.js";
+import { ARROW, LETTERS, PENALTY_PTS, answeredCount, gameEnded, resultsOpen } from "../../lib/game.js";
 import { msOf, norm } from "../../lib/utils.js";
 import { H, Q } from "./state.js";
 
@@ -33,7 +33,8 @@ export function scoreOf(uid, p) {
     return { q, a, auto, ov, ok: typeof ov === "boolean" ? ov : auto };
   });
   const right = per.filter((x) => x.ok);
-  return { per, right: right.length, pts: right.reduce((s, x) => s + x.q.pts, 0) };
+  const penalties = p.penalties || 0;
+  return { per, right: right.length, penalties, pts: right.reduce((s, x) => s + x.q.pts, 0) - penalties * PENALTY_PTS };
 }
 
 /**
@@ -49,7 +50,7 @@ export function computeRows(end = gameEnded(H.game)) {
     if (p.status !== "submitted" && !end) return { ...row, state: waiting ? "waiting" : "playing" };
     const sc = scoreOf(uid, p);
     const finishedAt = msOf(p.submittedAt) || msOf(H.game.endsAt) || now;
-    return { ...row, state: "final", pts: sc.pts, right: sc.right, finishedAt, elapsedSec: Math.round((finishedAt - msOf(H.game.startedAt)) / 1000), ok: end ? sc.per.map((x) => x.ok) : null };
+    return { ...row, state: "final", pts: sc.pts, right: sc.right, penalties: sc.penalties, finishedAt, elapsedSec: Math.round((finishedAt - msOf(H.game.startedAt)) / 1000), ok: end ? sc.per.map((x) => x.ok) : null };
   });
   const finals = list.filter((r) => r.state === "final").sort((a, b) => b.pts - a.pts || a.finishedAt - b.finishedAt);
   const others = list.filter((r) => r.state !== "final").sort((a, b) => b.answered - a.answered || a.name.localeCompare(b.name));

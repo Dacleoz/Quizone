@@ -15,7 +15,7 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == uid;
     }
     function playerFields() {
-      return ['name', 'status', 'answers', 'answered', 'joinedAt', 'submittedAt'];
+      return ['name', 'status', 'answers', 'answered', 'joinedAt', 'submittedAt', 'penalties'];
     }
     // Risposte: chiavi q1..q30; ognuna è un testo breve (domanda aperta) o l'indice dell'opzione scelta.
     function okAnswer(a, k) {
@@ -126,6 +126,9 @@ service cloud.firestore {
           && request.resource.data.name == resource.data.name
           && request.resource.data.get('joinedAt', null) == resource.data.get('joinedAt', null)
           && okAnswers(request.resource.data.answers)
+          // Penalità per uscita dalla scheda: possono solo aumentare.
+          && request.resource.data.get('penalties', 0) is int
+          && request.resource.data.get('penalties', 0) >= resource.data.get('penalties', 0)
           && request.resource.data.answered is int
           && request.resource.data.answered >= 0
           && request.resource.data.answered <= 30
